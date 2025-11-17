@@ -1,49 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import CoursesList from "./pages/CoursesList";
+import CourseDetails from "./pages/CourseDetails";
 
-// PUBLIC_INTERFACE
-function App() {
-  const [theme, setTheme] = useState('light');
+const navStyle = {
+  background: "#F9FAFB",
+  borderBottom: "1px solid #E5E7EB",
+  padding: "12px 16px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+};
+const brandStyle = { color: "#374151", textDecoration: "none", fontWeight: 600 };
+const linkStyle = { color: "#374151", textDecoration: "none", marginLeft: 16 };
 
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
-
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav style={navStyle}>
+        <Link to="/" style={brandStyle}>
+          TechLearn LMS
+        </Link>
+        <div>
+          <Link to="/courses" style={linkStyle}>
+            Courses
+          </Link>
+        </div>
+      </nav>
+      <main style={{ padding: 16, maxWidth: 960, margin: "0 auto" }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/courses" element={<CoursesList />} />
+          <Route path="/courses/:id" element={<CourseDetails />} />
+        </Routes>
+      </main>
     </div>
   );
 }
-
-export default App;
